@@ -41,10 +41,19 @@ export default function Home() {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
-    setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
-  };
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) => {
+  const { name, value, type } = e.target;
+
+  if (type === "checkbox") {
+    const checked = (e.target as HTMLInputElement).checked;
+    setForm({ ...form, [name]: checked });
+  } else {
+    setForm({ ...form, [name]: value });
+  }
+};
+
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
